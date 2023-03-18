@@ -2,6 +2,16 @@ const container = document.getElementById('container');
 const cells = [];
 const gridSize = 50;
 let gameInterval;
+const blueColors = [
+  '#1c7aa8',
+  '#24688c',
+  '#2b5070',
+  '#344c61',
+  '#3a3a52',
+  '#1e3c50',
+  '#104d5f',
+  '#0a5e6e',
+];
 
 for (let i = 0; i < gridSize; i++) {
     cells[i] = [];
@@ -9,7 +19,13 @@ for (let i = 0; i < gridSize; i++) {
         const cell = document.createElement('div');
         cell.className = 'cell';
         cell.addEventListener('click', () => {
-            cell.classList.toggle('alive');
+            if (cell.classList.contains('alive')) {
+                cell.classList.remove('alive');
+                cell.style.backgroundColor = '';
+            } else {
+                cell.classList.add('alive');
+                cell.style.backgroundColor = blueColors[Math.floor(Math.random() * blueColors.length)];
+            }
         });
         container.appendChild(cell);
         cells[i][j] = cell;
@@ -21,8 +37,10 @@ function randomizeGrid() {
         for (let j = 0; j < gridSize; j++) {
             const cell = cells[i][j];
             cell.classList.remove('alive');
+            cell.style.backgroundColor = '';
             if (Math.random() < 0.3) {
                 cell.classList.add('alive');
+                cell.style.backgroundColor = blueColors[Math.floor(Math.random() * blueColors.length)];
             }
         }
     }
@@ -56,6 +74,9 @@ function nextGeneration() {
             cell.className = 'cell';
             if (newCells[i][j] === 'alive') {
                 cell.classList.add('alive');
+                cell.style.backgroundColor = blueColors[Math.floor(Math.random() * blueColors.length)];
+            } else {
+                cell.style.backgroundColor = '';
             }
         })
     );
@@ -65,7 +86,7 @@ function startGame() {
     if (gameInterval) {
         clearInterval(gameInterval);
     }
-    gameInterval = setInterval(nextGeneration, 160); // High speed: 50 ms per generation
+    gameInterval = setInterval(nextGeneration, 100); // High speed: 50 ms per generation
 }
 
 randomizeGrid();
