@@ -7,11 +7,20 @@ for (let i = 0; i < gridSize; i++) {
     for (let j = 0; j < gridSize; j++) {
         const cell = document.createElement('div');
         cell.className = 'cell';
-        cell.addEventListener('click', () => {
-            cell.classList.toggle('alive');
-        });
         container.appendChild(cell);
         cells[i][j] = cell;
+    }
+}
+
+function randomizeGrid() {
+    for (let i = 0; i < gridSize; i++) {
+        for (let j = 0; j < gridSize; j++) {
+            const cell = cells[i][j];
+            cell.classList.remove('alive');
+            if (Math.random() < 0.3) {
+                cell.classList.add('alive');
+            }
+        }
     }
 }
 
@@ -48,4 +57,5 @@ function nextGeneration() {
     );
 }
 
-setInterval(nextGeneration, 100);
+randomizeGrid();
+setInterval(nextGeneration, 50); // High speed: 50 ms per generation
