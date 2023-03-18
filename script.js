@@ -1,12 +1,16 @@
 const container = document.getElementById('container');
 const cells = [];
 const gridSize = 50;
+let gameInterval;
 
 for (let i = 0; i < gridSize; i++) {
     cells[i] = [];
     for (let j = 0; j < gridSize; j++) {
         const cell = document.createElement('div');
         cell.className = 'cell';
+        cell.addEventListener('click', () => {
+            cell.classList.toggle('alive');
+        });
         container.appendChild(cell);
         cells[i][j] = cell;
     }
@@ -57,5 +61,20 @@ function nextGeneration() {
     );
 }
 
+function startGame() {
+    if (gameInterval) {
+        clearInterval(gameInterval);
+    }
+    gameInterval = setInterval(nextGeneration, 30); // High speed: 50 ms per generation
+}
+
 randomizeGrid();
-setInterval(nextGeneration, 50); // High speed: 50 ms per generation
+startGame();
+
+container.addEventListener('click', () => {
+    clearInterval(gameInterval);
+});
+
+container.addEventListener('mouseleave', () => {
+    startGame();
+});
