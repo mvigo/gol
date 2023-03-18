@@ -65,7 +65,7 @@ function startGame() {
     if (gameInterval) {
         clearInterval(gameInterval);
     }
-    gameInterval = setInterval(nextGeneration, 30); // High speed: 50 ms per generation
+    gameInterval = setInterval(nextGeneration, 400); // High speed: 50 ms per generation
 }
 
 randomizeGrid();
