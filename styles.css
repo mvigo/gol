@@ -12,6 +12,8 @@ body {
 }
 
 #game-container {
+    width: 100%;
+    max-width: 520px;
     margin-bottom: 20px;
 }
 
